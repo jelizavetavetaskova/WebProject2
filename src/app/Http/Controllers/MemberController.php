@@ -6,9 +6,16 @@ use Illuminate\Http\Request;
 use App\Models\Member;
 use Illuminate\View\View;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Routing\Controllers\HasMiddleware;
 
-class MemberController extends Controller
+class MemberController extends Controller implements HasMiddleware
 {
+    public static function middleware(): array
+    {
+        return [
+            'auth',
+        ];
+    }
     public function list(): View
     {
         $items = Member::orderBy('name', 'asc')->get();
