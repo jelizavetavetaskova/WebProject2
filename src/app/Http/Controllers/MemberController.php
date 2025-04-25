@@ -71,9 +71,9 @@ class MemberController extends Controller
         }
 
         public function delete(Member $member): RedirectResponse
-    {
-        // šeit derētu pārbaude, kas neļauj dzēst autoru, ja tas piesaistīts eksistējošām grāmatām
-        $member->delete();
-        return redirect('/members');
-    }
+        {
+            // šeit derētu pārbaude, kas neļauj dzēst autoru, ja tas piesaistīts eksistējošām grāmatām
+            $member->delete();
+            return redirect('/members');
+        }
 }
