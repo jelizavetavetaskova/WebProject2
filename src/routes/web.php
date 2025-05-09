@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\BandController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\MemberController;
@@ -20,3 +21,13 @@ Route::post('/members/delete/{member}', [MemberController::class, 'delete']);
 Route::get('/login', [AuthController::class, 'login'])->name('login');
 Route::post('/auth', [AuthController::class, 'authenticate']);
 Route::get('/logout', [AuthController::class, 'logout']);
+
+Route::get('/bands', [BandController::class, 'list']);
+
+Route::get('/bands/create', [BandController::class, 'create']);
+Route::post('/bands/put', [BandController::class, 'put']);
+
+Route::get('/bands/update/{band}', [BandController::class, 'update']);
+Route::post('/bands/patch/{band}', [BandController::class, 'patch']);
+
+Route::post('/bands/delete/{band}', [BandController::class, 'delete']);

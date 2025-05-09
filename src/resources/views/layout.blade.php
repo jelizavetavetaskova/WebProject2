@@ -3,7 +3,7 @@
  
     <head>
         <meta charset="utf-8">
-        <title>2. Projekts - {{ $title }}</title>
+        <title>2nd project - {{ $title }}</title>
         <meta name="description" content="Mans 2. Projekts">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link 
@@ -18,7 +18,7 @@
  
     <nav class="navbar navbar-expand-md bg-primary mb-3" data-bs-theme="dark">
     <div class="container">
-        <span class="navbar-brand mb-0 h1">2. Projekts</span>
+        <span class="navbar-brand mb-0 h1">2nd project</span>
  
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
             <span class="navbar-toggler-icon"></span>
@@ -27,20 +27,24 @@
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav">
                 <li class="nav-item">
-                    <a class="nav-link" href="/">Sākumlapa</a>
+                    <a class="nav-link" href="/">Homepage</a>
                 </li>
                 
                 @if(Auth::check()) 
                     <li class="nav-item">
-                        <a class="nav-link" href="/members">Dalībnieki</a>
+                        <a class="nav-link" href="/members">Members (founder)</a>
                     </li>
 
                     <li class="nav-item">
-                        <a class="nav-link" href="/logout">Beigt darbu</a>
+                        <a class="nav-link" href="/bands">Bands</a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="/logout">Log out</a>
                     </li>
                 @else 
                     <li class="nav-item">
-                        <a class="nav-link" href="/login">Autentificēties</a>
+                        <a class="nav-link" href="/login">Log in</a>
                     </li>
                 @endif
             </ul>

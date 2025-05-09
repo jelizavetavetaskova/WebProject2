@@ -41,7 +41,8 @@
         <div class="mb-3">
             <button type="submit" class="btn btn-primary">Pieslēgties</button>
         </div>
- 
+    
+        <p>user / password</p>
     </form>
  
 @endsection
