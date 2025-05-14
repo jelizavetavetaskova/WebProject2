@@ -10,22 +10,22 @@
             <thead class="thead-light">
                 <tr>
                     <th>ID</td>
-                    <th>Vārds</td>
+                    <th>Name</td>
                     <th>&nbsp;</td>
                 </tr>
             </thead>
             <tbody>
  
-            @foreach($items as $member)
+            @foreach($items as $artist)
             <tr>
-                <td>{{ $member->id }}</td>
-                <td>{{ $member->name }}</td>
+                <td>{{ $artist->id }}</td>
+                <td>{{ $artist->name }}</td>
                 <td>
-                    <a href="/members/update/{{ $member->id }}" class="btn btn-outline-primary btn-sm">Labot</a> 
+                    <a href="/artists/update/{{ $artist->id }}" class="btn btn-outline-primary btn-sm">Edit</a> 
                     / 
-                    <form action="/members/delete/{{ $member->id }}" method="post" class="deletion-form d-inline">
+                    <form action="/artists/delete/{{ $artist->id }}" method="post" class="deletion-form d-inline">
                         @csrf
-                        <button type="submit" class="btn btn-outline-danger btn-sm">Dzēst</button>
+                        <button type="submit" class="btn btn-outline-danger btn-sm">Delete</button>
                     </form>
                 </td>
             </tr>
@@ -36,10 +36,10 @@
  
     @else
  
-        <p>Nav atrasts neviens ieraksts</p>
+        <p>Not found</p>
  
     @endif
 
-    <a href="/members/create" class="btn btn-primary">Izveidot jaunu</a>
+    <a href="/artists/create" class="btn btn-primary">Add new artist</a>
  
 @endsection

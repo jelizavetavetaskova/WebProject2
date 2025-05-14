@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Artist;
 use App\Models\Member;
 use App\Models\Band;
 use App\Http\Requests\BandRequest;
@@ -35,14 +36,14 @@ class BandController extends Controller implements HasMiddleware
 
     public function create(): View
     {
-        $members = Member::orderBy('name', 'asc')->get();
+        $artists = Artist::orderBy('name', 'asc')->get();
     
         return view(
             'band.form',
             [
                 'title' => 'Add band',
                 'band' => new Band(),
-                'members' => $members,
+                'members' => $artists,
             ]
         );
     } 
@@ -80,14 +81,14 @@ class BandController extends Controller implements HasMiddleware
     // display Band edit form
     public function update(Band $band): View
     {
-        $members = Member::orderBy('name', 'asc')->get();
+        $artists = Artist::orderBy('name', 'asc')->get();
     
         return view(
             'band.form',
             [
                 'title' => 'Edit band',
                 'band' => $band,
-                'members' => $members,
+                'members' => $artists,
             ]
         );
     }

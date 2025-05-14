@@ -11,17 +11,17 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('bands', function (Blueprint $table) {
+        Schema::create('songs', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('member_id');
+            $table->foreignId('artist_id');
             $table->string('name');
-            $table->string('description')->nullable();
-            $table->string('genre');
+            $table->text('description')->nullable();
+            $table->integer('year');
             $table->string('image', 256)->nullable();
-            $table->integer('formed_year');
-            $table->boolean('display')->nullable();
-            $table->foreign('member_id')->references('id')->on('members');
+            $table->boolean('display');
             $table->timestamps();
+
+            $table->foreign('artist_id')->references('id')->on('artists');
         });
     }
 
@@ -30,6 +30,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('bands');
+        Schema::dropIfExists('songs');
     }
 };

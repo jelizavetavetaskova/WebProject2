@@ -12,9 +12,8 @@
                 <tr>
                     <th>ID</th>
                     <th>Title</th>
-                    <th>Founder</th>
-                    <th>Genre</th>
-                    <th>Formed year</th>
+                    <th>Artist</th>
+                    <th>Year</th>
                     <th>Description</th>
                     <th>Display</th>
                     <th>&nbsp;</th>
@@ -22,23 +21,22 @@
             </thead>
             <tbody>
     
-            @foreach($items as $band)
+            @foreach($items as $song)
                 <tr>
-                    <td>{{ $band->id }}</td>
-                    <td>{{ $band->name }}</td>
-                    <td>{{ $band->member->name }}</td>
-                    <td>{{ $band->genre }}</td>
-                    <td>{{ $band->formed_year }}</td>
-                    <td>{{ $band->description }}</td>
-                    <td>{!! $band->display ? '&#x2714;' : '&#x274C;' !!}</td>
+                    <td>{{ $song->id }}</td>
+                    <td>{{ $song->name }}</td>
+                    <td>{{ $song->artist->name }}</td>
+                    <td>{{ $song->year }}</td>
+                    <td>{{ $song->description }}</td>
+                    <td>{!! $song->display ? '&#x2714;' : '&#x274C;' !!}</td>
                     <td>
                         <a 
-                            href="/bands/update/{{ $band->id }}" 
+                            href="/songs/update/{{ $song->id }}" 
                             class="btn btn-outline-primary btn-sm"
                         >Edit</a> /
                         <form 
                             method="post" 
-                            action="/bands/delete/{{ $band->id }}" 
+                            action="/songs/delete/{{ $song->id }}" 
                             class="d-inline deletion-form"
                         >
                             @csrf
@@ -55,10 +53,10 @@
         </table>
     
     @else
-        <p>Empty table</p>
+        <p>Not found</p>
     @endif
     
-    <a href="/bands/create" class="btn btn-primary">Pievienot jaunu</a>
+    <a href="/songs/create" class="btn btn-primary">Add new song</a>
  
 @endsection
 

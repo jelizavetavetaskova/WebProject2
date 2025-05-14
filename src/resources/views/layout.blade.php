@@ -32,11 +32,11 @@
                 
                 @if(Auth::check()) 
                     <li class="nav-item">
-                        <a class="nav-link" href="/members">Members (founder)</a>
+                        <a class="nav-link" href="/artists">Artists</a>
                     </li>
 
                     <li class="nav-item">
-                        <a class="nav-link" href="/bands">Bands</a>
+                        <a class="nav-link" href="/songs">Songs</a>
                     </li>
 
                     <li class="nav-item">

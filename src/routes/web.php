@@ -1,33 +1,34 @@
 <?php
 
+use App\Http\Controllers\ArtistController;
 use App\Http\Controllers\BandController;
+use App\Http\Controllers\SongController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
-use App\Http\Controllers\MemberController;
 use App\Http\Controllers\AuthController;
 
 Route::get('/', [HomeController::class, 'index']);
 
-Route::get('/members', [MemberController::class, 'list']);
+Route::get('/artists', [ArtistController::class, 'list']);
 
-Route::get('/members/create', [MemberController::class, 'create']);
-Route::post('/members/put', [MemberController::class, 'put']);
+Route::get('/artists/create', [ArtistController::class, 'create']);
+Route::post('/artists/put', [ArtistController::class, 'put']);
 
-Route::get('/members/update/{member}', [MemberController::class, 'update']);
-Route::post('/members/patch/{member}', [MemberController::class, 'patch']);
+Route::get('/artists/update/{artist}', [ArtistController::class, 'update']);
+Route::post('/artists/patch/{artist}', [ArtistController::class, 'patch']);
 
-Route::post('/members/delete/{member}', [MemberController::class, 'delete']);
+Route::post('/artists/delete/{artist}', [ArtistController::class, 'delete']);
 
 Route::get('/login', [AuthController::class, 'login'])->name('login');
 Route::post('/auth', [AuthController::class, 'authenticate']);
 Route::get('/logout', [AuthController::class, 'logout']);
 
-Route::get('/bands', [BandController::class, 'list']);
+Route::get('/songs', [SongController::class, 'list']);
 
-Route::get('/bands/create', [BandController::class, 'create']);
-Route::post('/bands/put', [BandController::class, 'put']);
+Route::get('/songs/create', [SongController::class, 'create']);
+Route::post('/songs/put', [SongController::class, 'put']);
 
-Route::get('/bands/update/{band}', [BandController::class, 'update']);
-Route::post('/bands/patch/{band}', [BandController::class, 'patch']);
+Route::get('/songs/update/{song}', [SongController::class, 'update']);
+Route::post('/songs/patch/{song}', [SongController::class, 'patch']);
 
-Route::post('/bands/delete/{band}', [BandController::class, 'delete']);
+Route::post('/songs/delete/{song}', [SongController::class, 'delete']);

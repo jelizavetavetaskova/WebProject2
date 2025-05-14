@@ -16,7 +16,7 @@ class AuthController extends Controller
         return view(
             'auth.login', 
             [
-                'title' => 'Pieslēgties'
+                'title' => 'Log in'
             ]
         );
     }
@@ -29,11 +29,11 @@ class AuthController extends Controller
             $request->session()->regenerate();
 
             // pāradresācijas url, vēlāk nomainīsim uz /bands
-            return redirect('/members');
+            return redirect('/artists');
         }
 
         return back()->withErrors([
-            'name' => 'Autentifikācija neveiksmīga',
+            'name' => 'Log in failed',
         ]);
     }
     

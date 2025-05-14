@@ -5,22 +5,22 @@
     <h1>{{ $title }}</h1>
  
     @if ($errors->any())
-        <div class="alert alert-danger">Lūdzu, novērsiet radušās kļūdas!</div>
+        <div class="alert alert-danger">Please correct the mistakes!</div>
     @endif
     
 
-    <form method="post" action="{{ $member->exists ? '/members/patch/' . $member->id : '/members/put' }}">
+    <form method="post" action="{{ $artist->exists ? '/artists/patch/' . $artist->id : '/artists/put' }}">
         @csrf
  
         <div class="mb-3">
-            <label for="member-name" class="form-label">Dalībnieka vārds</label>
+            <label for="artist-name" class="form-label">Artist name</label>
  
             <input 
                 type="text" 
                 class="form-control @error('name') is-invalid @enderror" 
-                id="member-name" 
+                id="artist-name" 
                 name="name"
-                value="{{ old('name', $member->name) }}"
+                value="{{ old('name', $artist->name) }}"
             >
  
             @error('name')
@@ -29,7 +29,7 @@
  
         </div>
  
-        <button type="submit" class="btn btn-primary">{{ $member->exists ? "Rediģēt" : "Pievienot" }}</button>
+        <button type="submit" class="btn btn-primary">{{ $artist->exists ? "Edit" : "Add" }}</button>
  
     </form>
  
