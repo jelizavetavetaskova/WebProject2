@@ -13,6 +13,7 @@
                     <th>ID</th>
                     <th>Title</th>
                     <th>Artist</th>
+                    <th>Album</th>
                     <th>Year</th>
                     <th>Description</th>
                     <th>Display</th>
@@ -26,6 +27,7 @@
                     <td>{{ $song->id }}</td>
                     <td>{{ $song->name }}</td>
                     <td>{{ $song->artist->name }}</td>
+                    <td>{{ $song->album->title }}</td>
                     <td>{{ $song->year }}</td>
                     <td>{{ $song->description }}</td>
                     <td>{!! $song->display ? '&#x2714;' : '&#x274C;' !!}</td>

@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Artist extends Model
 {
-     public function songs(): HasMany
+    public function songs(): HasMany
     {
         return $this->hasMany(Song::class);
     }

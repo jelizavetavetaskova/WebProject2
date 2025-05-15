@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\SongRequest;
+use App\Models\Album;
 use App\Models\Artist;
 use App\Models\Song;
 use Illuminate\Http\RedirectResponse;
@@ -36,6 +37,7 @@ class SongController extends Controller
     public function create(): View
     {
         $artists = Artist::orderBy('name', 'asc')->get();
+        $albums = Album::orderBy('title', 'asc')->get();
     
         return view(
             'song.form',
@@ -43,6 +45,7 @@ class SongController extends Controller
                 'title' => 'Add song',
                 'song' => new Song(),
                 'artists' => $artists,
+                'albums' => $albums,
             ]
         );
     } 

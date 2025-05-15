@@ -1,4 +1,3 @@
-
 @extends('layout')
  
 @section('content')
@@ -54,6 +53,28 @@
         @enderror
     </div>
  
+    <div class="mb-3">
+        <label for="song-album" class="form-label">Album</label>
+ 
+        <select
+            id="song-album"
+            name="album_id"
+            class="form-select @error('album_id') is-invalid @enderror"
+        >
+            <option value="">Choose album!</option>
+                @foreach($albums as $album)
+                    <option
+                        value="{{ $album->id }}"
+                        @if ($album->id == old('album_id', $song->album->id ?? false)) selected @endif
+                    >{{ $album->title }}</option>
+                @endforeach
+        </select>
+ 
+        @error('artist_id')
+            <p class="invalid-feedback">{{ $errors->first('artist_id') }}</p>
+        @enderror
+    </div>
+
     <div class="mb-3">
         <label for="song-description" class="form-label">Description</label>
  

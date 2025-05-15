@@ -24,6 +24,7 @@ class SongRequest extends FormRequest
         return [
             'name' => 'required|min:3|max:256',
             'artist_id' => 'required',
+            'album_id' => 'required',
             'description' => 'nullable',
             'year' => 'numeric|nullable',
             'image' => 'nullable|image',
