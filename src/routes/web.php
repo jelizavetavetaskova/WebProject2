@@ -3,6 +3,7 @@
 use App\Http\Controllers\AlbumController;
 use App\Http\Controllers\ArtistController;
 use App\Http\Controllers\BandController;
+use App\Http\Controllers\DataController;
 use App\Http\Controllers\SongController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
@@ -43,3 +44,9 @@ Route::get('/albums/update/{album}', [AlbumController::class, 'update']);
 Route::post('/albums/patch/{album}', [AlbumController::class, 'patch']);
 
 Route::post('/albums/delete/{album}', [AlbumController::class, 'delete']);
+
+
+// Data/API
+Route::get('/data/get-top-songs', [DataController::class, 'getTopSongs']);
+Route::get('/data/get-song/{song}', [DataController::class, 'getSong']);
+Route::get('/data/get-related-songs/{song}', [DataController::class, 'getRelatedSongs']);

@@ -19,4 +19,18 @@ class Song extends Model
         return $this->belongsTo(Album::class);
 
     }
+
+    public function jsonSerialize(): mixed
+    {
+        return [
+            'id' => intval($this->id),
+            'name' => $this->name,
+            'description' => $this->description,
+            'artist' => $this->artist->name,
+            'genre' => $this->genre,
+            'album' => ($this->album ? $this->album->title : ''),
+            'year' => intval($this->year),
+            'image' => asset('images/' . $this->image),
+        ];
+    }
 }
