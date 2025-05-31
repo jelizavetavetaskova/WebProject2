@@ -1,3 +1,5 @@
+import { useState } from "react";
+
 const topSongs = [
     {
         "id": 5,
@@ -79,37 +81,32 @@ const relatedSongs = [
 
 // Galvenā lietotnes komponente
 export default function App() {
+    const [selectedSongID, setSelectedSongID] = useState(null);
     // funkcija Song ID saglabāšanai stāvoklī
     function handleSongSelection(songID) {
-        alert("Chosen ID: " + songID);
+        setSelectedSongID(songID);
     }
 
     // funkcija dziesmas izveles atcelsanai
     function handleGoingBack() {
-        alert("Going back to Homepage")
+        setSelectedSongID(null);
     }
-
-    const selectedSongID = 5; // pagaidu stavokla mainigais
-
-
 
     return (
         <>
             <Header />
             <main className="mb-8 px-2 md:container md:mx-auto">
-                
-                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 max-w-6xl mx-auto">
-                    {/* <Homepage handleSongSelection={handleSongSelection} /> */}
-                </div>
-                
-                
+                {selectedSongID ? 
                     <SongPage 
-                            selectedSongID={selectedSongID}
-                            handleSongSelection={handleSongSelection}
-                            handleGoingBack={handleGoingBack}
-                        />
-                
-                
+                        selectedSongID={selectedSongID}
+                        handleSongSelection={handleSongSelection}
+                        handleGoingBack={handleGoingBack}
+                    /> 
+                :
+                    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 max-w-6xl mx-auto">
+                        <Homepage handleSongSelection={handleSongSelection} />
+                    </div>
+                }
             </main>
             <Footer />
         </>
@@ -138,19 +135,17 @@ function Homepage({ handleSongSelection }) {
 function TopSongView({ song, index, handleSongSelection }) {
     return (
         <div className="rounded-xl p-4 flex flex-col items-center text-center border border-solid border-black">
-            <img 
-                src={song.image} 
-                alt={song.name} 
-                className="w-40 h-40 rounded-lg mb-4" />
+            {song.image && song.image !== 'http://localhost/images' ? 
+                (<img src={song.image} alt={song.name} className="w-48 h-48" />) : 
+                (<div className="w-48 h-48 bg-gray-300 rounded flex items-center justify-center text-gray-600"></div>)
+            }
             <h2 className="text-xl font-semibold">{song.name}</h2>
-            <p className="text-gray-600 mb-4">{song.artist.name}</p>
-            <div className="flex gap-2">
-                <a href="#" className="bg-[#1DB954] text-white px-3 py-2 rounded text-sm">Listen</a>
-                <SeeMoreBtn 
-                    songID={song.id} 
-                    handleSongSelection={handleSongSelection} 
-                />
-            </div>
+            <p className="text-gray-600 mb-4">{song.artist}</p>
+            
+            <SeeMoreBtn 
+                songID={song.id} 
+                handleSongSelection={handleSongSelection} 
+            />
         </div>
     )
 }
@@ -184,7 +179,10 @@ function SelectedSongView({ selectedSongID, handleGoingBack }) {
         <> 
             <div className="flex flex-col ml-20">
                 <div>
-                    <img src={selectedSong.image} alt={selectedSong.name} className="w-96 rounded-lg" />
+                    {selectedSong.image && selectedSong.image !== 'http://localhost/images' ? 
+                        (<img src={selectedSong.image} alt={selectedSong.name} className="w-96 h-96 rounded-lg" />) : 
+                        (<div className="w-48 h-48 bg-gray-300 rounded flex items-center justify-center text-gray-600 rounded-lg"></div>)
+                    }
                 </div>
                 <h1 className="text-2xl font-bold mb-1 w-3/4">{selectedSong.name}</h1>
                 <p className="text-lg text-gray-700 mb-4">{selectedSong.artist}</p>
