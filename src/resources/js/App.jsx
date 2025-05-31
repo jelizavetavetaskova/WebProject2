@@ -1,85 +1,5 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import '../css/loader.css';
-
-
-const topSongs = [
-    {
-        "id": 5,
-        "name": "Don't hate yourself but don't love yourself too much",
-        "description": "Don't hate yourself, but don't love yourself too much\n\r\nThere are million, millions of your kind\n\r\nThink you're special, but you're not\n\r\nReally, don't hate yourself, but don't love yourself too much\n\r\nMommy said you're a special boy, but you're really not",
-        "artist": "Baby Lasagna",
-        "genre": null,
-        "album": "DMNS & MOSQUITOES",
-        "year": 2025,
-        "image": "http://localhost/images/6839899002363.jpg"
-    },
-    {
-        "id": 3,
-        "name": "World in Fire",
-        "description": null,
-        "artist": "MILKOVSKYI",
-        "genre": null,
-        "album": "Can't return home",
-        "year": 2018,
-        "image": "http://localhost/images"
-    },
-    {
-        "id": 4,
-        "name": "Return home",
-        "description": "123",
-        "artist": "MILKOVSKYI",
-        "genre": null,
-        "album": "Return Home",
-        "year": 2009,
-        "image": "http://localhost/images"
-    }
-];
-
-const selectedSong = {
-        "id": 5,
-        "name": "Don't hate yourself but don't love yourself too much",
-        "description": "Don't hate yourself, but don't love yourself too much\r\nThere are million, millions of your kind\r\nThink you're special, but you're not\r\nReally, don't hate yourself, but don't love yourself too much\r\nMommy said you're a special boy, but you're really not\r\n\r\nToxic positivity and everything's okay, guess what?\r\nThere's no possibility of things always going your way\r\nC-C-Comparing is despairing, your worth is not in likes\r\nThere's no motivational quote to fix your broken life, oh\r\n\r\nDon't hate yourself, but don't love yourself too much\r\nThere are million, millions of your kind\r\nThink you're special, but you're not\r\nReally, don't hate yourself, but don't love yourself too much\r\nMommy said you're a special boy, but you're really not\r\n\r\nNo matter how many v-v-videos you're watching\r\nNot gonna change your brain into thinking positive thoughts\r\nThere is no easy way, no one size fits all\r\nQuit looking for salvation on your fucking phone\r\n\r\nDon't hate yourself, but don't love yourself too much\r\nThere are million, millions of your kind\r\nThink you're special, but you're not\r\nReally, don't hate yourself, but don't love yourself too much\r\nMommy said you're a special boy, but you're really not\r\n\r\nLa-la-la-la-la, la-la-la-la-la-la\r\nLa-la-la-la, la-la-la-la\r\nLa-la-la-la-la, la-la-la-la-la-la\r\nLa-la-la-la, la-la-la-la\r\n\r\nNarcissistic culture has reached its peak\r\nFeels a lot like Rome, feels a lot like Greece (oh, no)\r\nI'm no better, don't get me wrong\r\nI'm as ugly as anybody, let's all sing along, oh\r\n\r\nDon't hate yourself, but don't love yourself too much\r\nThere are million, millions of your kind\r\nThink you're special, but you're not\r\nReally, don't hate yourself, but don't love yourself too much\r\nMommy said you're a special boy, but you're really not\r\n\r\nDon't hate yourself, but don't love yourself too much\r\nThere are million, millions of your kind\r\nThink you're special, but you're not\r\nReally, don't hate yourself, but don't love yourself too much\r\nMommy said you're a special boy, but you're really not",
-        "artist": "Baby Lasagna",
-        "genre": null,
-        "album": "DMNS & MOSQUITOES",
-        "year": 2025,
-        "spotify": null,
-        "image": "http://localhost/images/6839899002363.jpg"
-};
-
-const relatedSongs = [
-    {
-        "id": 6,
-        "name": "Europapa",
-        "description": null,
-        "artist": "Joost",
-        "genre": null,
-        "album": "Unity",
-        "year": 2018,
-        "image": "http://localhost/images"
-    },
-    {
-        "id": 5,
-        "name": "Don't hate yourself but don't love yourself too much",
-        "description": "Don't hate yourself, but don't love yourself too much\\n\r\nThere are million, millions of your kind\\n\r\nThink you're special, but you're not\\n\r\nReally, don't hate yourself, but don't love yourself too much\\n\r\nMommy said you're a special boy, but you're really not",
-        "artist": "Baby Lasagna",
-        "genre": null,
-        "album": "DMNS & MOSQUITOES",
-        "year": 2025,
-        "image": "http://localhost/images/6839899002363.jpg"
-    },
-    {
-        "id": 4,
-        "name": "Return home",
-        "description": "123",
-        "artist": "MILKOVSKYI",
-        "genre": null,
-        "album": "Return Home",
-        "year": 2009,
-        "image": "http://localhost/images"
-    }
-]
-
 
 // Galvenā lietotnes komponente
 export default function App() {
@@ -98,13 +18,13 @@ export default function App() {
         <>
             <Header />
             <main className="mb-8 px-2 md:container md:mx-auto">
-                {selectedSongID ? 
-                    <SongPage 
+                {selectedSongID ?
+                    <SongPage
                         selectedSongID={selectedSongID}
                         handleSongSelection={handleSongSelection}
                         handleGoingBack={handleGoingBack}
-                    /> 
-                :
+                    />
+                    :
                     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 max-w-6xl mx-auto">
                         <Homepage handleSongSelection={handleSongSelection} />
                     </div>
@@ -117,17 +37,47 @@ export default function App() {
 
 // Sākumlapa - ielādē datus no API un parāda TOP dziesmas
 function Homepage({ handleSongSelection }) {
+    const [topSongs, setTopSongs] = useState([]);
+    const [isLoading, setIsLoading] = useState(false);
+    const [error, setError] = useState(null);
+
+    useEffect(function () {
+        async function fetchTopSongs() {
+            try {
+                setIsLoading(true);
+                setError(null);
+                const response = await fetch("http://localhost/data/get-top-songs");
+
+                if (!response.ok) {
+                    throw new Error("Data loading error. Please refresh the page");
+                }
+
+                const data = await response.json();
+                console.log('top songs fetched', data);
+                setTopSongs(data);
+            } catch (error) {
+                setError(error.message);
+            } finally {
+                setIsLoading(false);
+            }
+        }
+
+        fetchTopSongs();
+    }, []);
+
     return (
         <>
-            {
-                topSongs.map((song, index) =>
+            {isLoading && <Loader />}
+            {error && <ErrorMessage msg={error} />}
+            {!isLoading && !error &&
+                (topSongs.map((song, index) =>
                     <TopSongView
                         song={song}
                         key={song.id}
                         index={index}
                         handleSongSelection={handleSongSelection}
                     />
-                )
+                ))
             }
         </>
     );
@@ -137,16 +87,16 @@ function Homepage({ handleSongSelection }) {
 function TopSongView({ song, index, handleSongSelection }) {
     return (
         <div className="rounded-xl p-4 flex flex-col items-center text-center border border-solid border-black">
-            {song.image && song.image !== 'http://localhost/images' ? 
-                (<img src={song.image} alt={song.name} className="w-48 h-48" />) : 
+            {song.image && song.image !== 'http://localhost/images' ?
+                (<img src={song.image} alt={song.name} className="w-48 h-48" />) :
                 (<div className="w-48 h-48 bg-gray-300 rounded flex items-center justify-center text-gray-600"></div>)
             }
             <h2 className="text-xl font-semibold">{song.name}</h2>
             <p className="text-gray-600 mb-4">{song.artist}</p>
-            
-            <SeeMoreBtn 
-                songID={song.id} 
-                handleSongSelection={handleSongSelection} 
+
+            <SeeMoreBtn
+                songID={song.id}
+                handleSongSelection={handleSongSelection}
             />
         </div>
     )
@@ -157,7 +107,7 @@ function SongPage({ selectedSongID, handleSongSelection, handleGoingBack }) {
     return (
         <>
             <div className="grid grid-cols-[2fr_2fr_0.5fr]">
-                <SelectedSongView 
+                <SelectedSongView
                     selectedSongID={selectedSongID}
                     handleGoingBack={handleGoingBack}
                 />
@@ -165,7 +115,7 @@ function SongPage({ selectedSongID, handleSongSelection, handleGoingBack }) {
 
             <h2 className="text-2xl font-bold text-center mt-10 mb-10 w-full">Similar songs</h2>
             <div className="grid grid-cols-3 justify-around">
-                <RelatedSongSection 
+                <RelatedSongSection
                     selectedSongID={selectedSongID}
                     handleSongSelection={handleSongSelection}
                 />
@@ -175,33 +125,65 @@ function SongPage({ selectedSongID, handleSongSelection, handleGoingBack }) {
 }
 
 function SelectedSongView({ selectedSongID, handleGoingBack }) {
+    const [selectedSong, setSelectedSong] = useState({});
+    const [isLoading, setIsLoading] = useState(false);
+    const [error, setError] = useState(null);
+
+    useEffect(function () {
+        async function fetchSelectedSong() {
+            try {
+                setIsLoading(true);
+                setError(null);
+                const response = await fetch('http://localhost/data/get-song/' + selectedSongID)
+
+                if (!response.ok) {
+                    throw new Error("Data loading error. Please refresh the page.");
+                }
+
+                const data = await response.json();
+                console.log('song' + selectedSongID + ' fetched', data);
+                setSelectedSong(data);
+            } catch (error) {
+                setError(error.message);
+            } finally {
+                setIsLoading(false);
+            }
+        }
+
+        fetchSelectedSong();
+    }, [selectedSongID]);
+
     return (
-        <> 
-            <div className="flex flex-col ml-20">
-                <div>
-                    {selectedSong.image && selectedSong.image !== 'http://localhost/images' ? 
-                        (<img src={selectedSong.image} alt={selectedSong.name} className="w-96 h-96 rounded-lg" />) : 
-                        (<div className="w-48 h-48 bg-gray-300 rounded flex items-center justify-center text-gray-600 rounded-lg"></div>)
+        <>
+            {isLoading && <Loader />}
+            {error && <ErrorMessage msg={error} />}
+            {!isLoading && !error && <>
+                <div className="flex flex-col ml-20">
+                    <div>
+                        {selectedSong.image && selectedSong.image !== 'http://localhost/images' ?
+                            (<img src={selectedSong.image} alt={selectedSong.name} className="w-96 h-96 rounded-lg" />) :
+                            (<div className="w-48 h-48 bg-gray-300 rounded flex items-center justify-center text-gray-600 rounded-lg"></div>)
+                        }
+                    </div>
+                    <h1 className="text-2xl font-bold mb-1 w-3/4">{selectedSong.name}</h1>
+                    <p className="text-lg text-gray-700 mb-4">{selectedSong.artist}</p>
+                    <p>{selectedSong.album}</p>
+                    {selectedSong.spotify ?
+                        (<a href={selectedSong.spotify} target="_blank" className="inline-block py-1 px-2 bg-[#1DB954] text-white w-3/4 text-center rounded-lg">Listen on Spotify</a>) :
+                        (<span className="inline-block py-1 px-2 bg-gray-400 text-white w-3/4 text-center rounded-lg text-sm opacity-50 cursor-not-allowed ">No Spotify link</span>)
                     }
                 </div>
-                <h1 className="text-2xl font-bold mb-1 w-3/4">{selectedSong.name}</h1>
-                <p className="text-lg text-gray-700 mb-4">{selectedSong.artist}</p>
-                <p>{selectedSong.album}</p>
-                {selectedSong.spotify ?
-                    (<a href={selectedSong.spotify} target="_blank" className="inline-block py-1 px-2 bg-[#1DB954] text-white w-3/4 text-center rounded-lg">Listen on Spotify</a>) :
-                    (<span className="inline-block py-1 px-2 bg-gray-400 text-white w-3/4 text-center rounded-lg text-sm opacity-50 cursor-not-allowed ">No Spotify link</span>)
-                }
-            </div>
-            <div className="flex flex-col">
-                {selectedSong.description
-  ? selectedSong.description.split('\n').map((line, index) => (
-      <p key={index} className="block h-5">{line}</p>
-    ))
-  : <p>No description</p>}
-            </div>
-            <div className="mb-12 flex flex-col ml-20">
-                <GoBackBtn handleGoingBack={handleGoingBack} />
-            </div>
+                <div className="flex flex-col">
+                    {selectedSong.description
+                        ? selectedSong.description.split('\n').map((line, index) => (
+                            <p key={index} className="block h-5">{line}</p>
+                        ))
+                        : <p>No description</p>}
+                </div>
+                <div className="mb-12 flex flex-col ml-20">
+                    <GoBackBtn handleGoingBack={handleGoingBack} />
+                </div>
+            </>}
         </>
     )
 }
@@ -220,25 +202,57 @@ function GoBackBtn({ handleGoingBack }) {
 
 // Līdzīgo dziesmu sadaļa
 function RelatedSongSection({ selectedSongID, handleSongSelection }) {
+    const [relatedSongs, setRelatedSongs] = useState([]);
+    const [isLoading, setIsLoading] = useState(false);
+    const [error, setError] = useState(null);
+
+    useEffect(function () {
+        async function fetchRelatedSongs() {
+            try {
+                setIsLoading(true);
+                setError(null);
+                const response = await fetch('http://localhost/data/get-related-songs/' + selectedSongID)
+
+                if (!response.ok) {
+                    throw new Error("Data loading error. Please refresh the page.");
+                }
+
+                const data = await response.json();
+                console.log('song' + selectedSongID + ' fetched', data);
+                setRelatedSongs(data);
+            } catch (error) {
+                setError(error.message);
+            } finally {
+                setIsLoading(false);
+            }
+        }
+
+        fetchRelatedSongs();
+    }, []);
+
     return (
         <>
-            {relatedSongs.map(song => (
-                <RelatedSongView
-                    song={song}
-                    key={song.id}
-                    handleSongSelection={handleSongSelection}
-                />
-            ))}
+            {isLoading && <Loader />}
+            {error && <ErrorMessage msg={error} />}
+            {!isLoading && !error &&
+                (relatedSongs.map(song => (
+                    <RelatedSongView
+                        song={song}
+                        key={song.id}
+                        handleSongSelection={handleSongSelection}
+                    />)
+            ))
+        }
         </>
-    )
+    );
 }
 
 function RelatedSongView({ song, handleSongSelection }) {
     return (
         <>
             <div className="flex flex-col items-center border border-solid border-black rounded-lg p-6 m-2">
-                {song.image && song.image !== 'http://localhost/images' ? 
-                    (<img src={song.image} alt={song.name} className="w-48 h-48" />) : 
+                {song.image && song.image !== 'http://localhost/images' ?
+                    (<img src={song.image} alt={song.name} className="w-48 h-48" />) :
                     (<div className="w-48 h-48 bg-gray-300 rounded flex items-center justify-center text-gray-600"></div>)
                 }
                 <p className="text-center text-xl font-semibold">{song.name}</p>
@@ -256,8 +270,8 @@ function RelatedSongView({ song, handleSongSelection }) {
 function SeeMoreBtn({ songID, handleSongSelection }) {
     return (
         <button
-        className="inline-block rounded py-1 px-3 border border-solid border-black hover:bg-gray-400 cursor-pointer"
-        onClick={() => handleSongSelection(songID)}>
+            className="inline-block rounded py-1 px-3 border border-solid border-black hover:bg-gray-400 cursor-pointer"
+            onClick={() => handleSongSelection(songID)}>
             About
         </button>
     )
@@ -296,7 +310,7 @@ function Loader() {
 function ErrorMessage({ msg }) {
     return (
         <div className="md:container md:mx-auto bg-red-300 my-8 p-2">
-            <p className="text-black">{ msg }</p>
+            <p className="text-black">{msg}</p>
         </div>
     )
 }
