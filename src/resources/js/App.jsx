@@ -176,7 +176,7 @@ function SelectedSongView({ selectedSongID, handleGoingBack }) {
                 <div className="flex flex-col">
                     {selectedSong.description
                         ? selectedSong.description.split('\n').map((line, index) => (
-                            <p key={index} className="block h-5">{line}</p>
+                            <p key={index} className="block min-h-5">{line}</p>
                         ))
                         : <p>No description</p>}
                 </div>

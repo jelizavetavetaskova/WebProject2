@@ -8,11 +8,12 @@ use App\Models\Artist;
 use App\Models\Song;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Controllers\HasMiddleware;
 use Illuminate\View\View;
 
 
-class SongController extends Controller
-{
+class SongController extends Controller implements HasMiddleware
+{ 
     // call auth middleware
     public static function middleware(): array
     {
