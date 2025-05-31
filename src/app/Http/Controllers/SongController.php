@@ -51,7 +51,7 @@ class SongController extends Controller
     } 
 
     // validate and save a band 
-    private function saveBandData(Song $song, SongRequest $request): void {
+    private function saveSongData(Song $song, SongRequest $request): void {
         // validation in BandRequest.php
         $validatedData = $request->validated();
 
@@ -76,7 +76,7 @@ class SongController extends Controller
     public function put(SongRequest $request): RedirectResponse
     {
         $song = new Song();
-        $this->saveBandData($song, $request); 
+        $this->saveSongData($song, $request); 
         return redirect('/songs');
     }
 
@@ -84,12 +84,14 @@ class SongController extends Controller
     public function update(Song $song): View
     {
         $artists = Artist::orderBy('name', 'asc')->get();
+        $albums = Album::orderBy('title', 'asc')->get();
     
         return view(
             'song.form',
             [
                 'title' => 'Edit song',
                 'song' => $song,
+                'albums' => $albums,
                 'artists' => $artists,
             ]
         );
@@ -98,7 +100,7 @@ class SongController extends Controller
     // update Band data
     public function patch(Song $song, SongRequest $request): RedirectResponse
     {
-        $this->saveBandData($song, $request);
+        $this->saveSongData($song, $request);
         return redirect('/songs');
     }
 

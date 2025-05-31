@@ -104,6 +104,22 @@
             <p class="invalid-feedback">{{ $errors->first('year') }}</p>
         @enderror
     </div>
+
+    <div class="mb-3">
+        <label for="song-spotify" class="form-label">Spotify link</label>
+ 
+        <input
+            type="text" 
+            id="song-spotify"
+            name="spotify"
+            value="{{ old('spotify', $song->spotify) }}"
+            class="form-control @error('spotify') is-invalid @enderror"
+        >
+ 
+        @error('spotify')
+            <p class="invalid-feedback">{{ $errors->first('spotify') }}</p>
+        @enderror
+    </div>
  
     <div class="mb-3">
         <label for="song-image" class="form-label">Image</label>

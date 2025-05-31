@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Song extends Model
 {
-    protected $fillable = ['name', 'artist_id', 'album_id', 'description', 'genre', 'year'];
+    protected $fillable = ['name', 'artist_id', 'album_id', 'description', 'genre', 'year', 'spotify'];
     public function artist(): BelongsTo
     {
         return $this->belongsTo(Artist::class);
@@ -30,6 +30,7 @@ class Song extends Model
             'genre' => $this->genre,
             'album' => ($this->album ? $this->album->title : ''),
             'year' => intval($this->year),
+            'spotify' => $this->spotify,
             'image' => asset('images/' . $this->image),
         ];
     }

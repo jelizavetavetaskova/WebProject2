@@ -12,8 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('songs', function (Blueprint $table) {
-            $table->foreignId('album_id');
-            $table->foreign('album_id')->references('id')->on('albums');
+            $table->string('spotify')->nullable();
         });
     }
 
@@ -23,7 +22,7 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('songs', function (Blueprint $table) {
-            $table->dropColumn('album_id');
+            $table->dropColumn('spotify');
         });
     }
 };

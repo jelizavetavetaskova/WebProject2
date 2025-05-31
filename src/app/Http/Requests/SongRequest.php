@@ -27,6 +27,7 @@ class SongRequest extends FormRequest
             'album_id' => 'required',
             'description' => 'nullable',
             'year' => 'numeric|nullable',
+            'spotify' => 'nullable|string|starts_with:https://open.spotify.com/track/',
             'image' => 'nullable|image',
             'display' => 'nullable',
         ];
