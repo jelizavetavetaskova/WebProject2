@@ -1,4 +1,6 @@
 import { useState } from "react";
+import '../css/loader.css';
+
 
 const topSongs = [
     {
@@ -172,8 +174,6 @@ function SongPage({ selectedSongID, handleSongSelection, handleGoingBack }) {
     )
 }
 
-
-
 function SelectedSongView({ selectedSongID, handleGoingBack }) {
     return (
         <> 
@@ -281,5 +281,22 @@ function Footer() {
                 J. Vetaškova, VeA, 2025
             </div>
         </footer>
+    )
+}
+
+// Ielade un kludas
+function Loader() {
+    return (
+        <div className="my-12 px-2 md:container md:mx-auto text-center clear-both">
+            <div className="loader"></div>
+        </div>
+    )
+}
+
+function ErrorMessage({ msg }) {
+    return (
+        <div className="md:container md:mx-auto bg-red-300 my-8 p-2">
+            <p className="text-black">{ msg }</p>
+        </div>
     )
 }
